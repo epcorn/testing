@@ -12,6 +12,8 @@ import connectDB from "./config/mongoose.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 import cloudinary from "./config/cloudinary.js";
 
+await connectDB();
+
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -65,9 +67,8 @@ app.post("/api/v1/upload", async function (req, res, next) {
     next(error);
   }
 });
-(async function fn() {
-  await connectDB();
-})()(function fn() {
+
+(function fn() {
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/client/dist")));
     app.get("*", (req, res) =>
