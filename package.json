@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "install-client": "cd client && npm install",
+    "install-client": "cd client && npm install --production=false",
     "build-client": "cd client && npm run build",
     "setup-production": "npm run install-client && npm run build-client && npm install",
     "start-dev": "nodemon server.js"
