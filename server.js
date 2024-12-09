@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 import express from "express";
 import path from "path";
 import cors from "cors";
@@ -7,6 +7,12 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import fs from "fs";
+import rootRouter from "./routes/index.js";
+import connectDB from "./config/mongoose.js";
+import errorMiddleware from "./middleware/errorMiddleware.js";
+import cloudinary from "./config/cloudinary.js";
+
+connectDB();
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -29,6 +35,7 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload({ useTempFiles: true }));
+app.use("/api/v1", rootRouter);
 
 app.post("/api/v1/upload", async function (req, res, next) {
   try {
@@ -61,7 +68,6 @@ app.post("/api/v1/upload", async function (req, res, next) {
   }
 });
 
-
 (function fn() {
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/client/dist")));
@@ -74,6 +80,9 @@ app.post("/api/v1/upload", async function (req, res, next) {
     });
   }
 })();
+
+//Error handling middleware
+app.use(errorMiddleware);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server running at port: ${port}`));
