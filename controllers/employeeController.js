@@ -1,5 +1,6 @@
 import Employee from "../models/employeeModel.js";
 import { createToken } from "../middleware/verifyUser.js";
+import { errorHandler } from "../utils/error.js";
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
