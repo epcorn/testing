@@ -11,7 +11,9 @@ import rootRouter from "./routes/index.js";
 import connectDB from "./config/mongoose.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 import cloudinary from "./config/cloudinary.js";
+import dotenv from "dotenv";
 
+dotenv.config();
 await connectDB();
 
 const app = express();
