@@ -5,14 +5,6 @@ import { fileURLToPath } from "url";
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-app.get("/", async (req, res) => {
-  try {
-    res.status(200).json({ message: "Server is working properly" });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 (function fn() {
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/client/dist")));
